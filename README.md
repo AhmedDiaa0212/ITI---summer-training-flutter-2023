@@ -1,4 +1,4 @@
-# ITI - summer Training - Flutter -
+# ITI - Summer Training - Flutter -
 
 A new Flutter project.
 
