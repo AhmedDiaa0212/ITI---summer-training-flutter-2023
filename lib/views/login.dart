@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:newapp/MyButton.dart';
-import 'package:newapp/page2.dart';
+import 'package:newapp/views/MyButton.dart';
+import 'package:newapp/views/page2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WidgetOne extends StatefulWidget {
