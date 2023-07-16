@@ -21,7 +21,10 @@ class _MyButtonState extends State<MyButton> {
       child: Center(
           child: Text(
         widget.lable,
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
       )),
     );
   }
