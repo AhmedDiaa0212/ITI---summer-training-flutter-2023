@@ -42,7 +42,7 @@ class _MainScreenState extends State<MainScreen> {
             );
           } else {
             return const Center(
-              child: Text("Error in this screen"),
+              child: Text("There is an error on this screen"),
             );
           }
         },
