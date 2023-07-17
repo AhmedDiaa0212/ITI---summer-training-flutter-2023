@@ -49,14 +49,6 @@ class _WidgetOneState extends State<WidgetOne> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       decoration: const InputDecoration(
-                          labelText: 'Phone Number',
-                          prefixIcon: Icon(Icons.phone)),
-                      keyboardType: TextInputType.phone,
-                    )),
-                Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      decoration: const InputDecoration(
                           labelText: "Password",
                           prefixIcon: Icon(Icons.password)),
                       validator: (value) {

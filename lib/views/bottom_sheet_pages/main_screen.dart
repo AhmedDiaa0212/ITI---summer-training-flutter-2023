@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:newapp/models/todos_model.dart';
-import '../../services/todos_services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newapp/views/todos/todos_cubit.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -10,39 +10,51 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  List<TodosModel> todos = [];
-  bool isLoading = true;
-
-  getTodos() async {
-    todos = await TodosService().getTodosData();
-    isLoading = false;
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getTodos();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? const Center(
-            child: CircularProgressIndicator(),
-          )
-        : ListView.builder(
-            itemCount: todos.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                leading: Text(todos[index].id.toString()),
-                title: Text(todos[index].title ?? "--"),
-                subtitle: Text(todos[index].completed.toString()),
-                trailing: const Icon(Icons.list),
-                tileColor: const Color.fromARGB(255, 229, 243, 250),
-                iconColor: Colors.blue,
-              );
-            },
-          );
+    return BlocProvider(
+      create: (context) => TodosCubit(),
+      child: BlocConsumer<TodosCubit, TodosState>(
+        builder: (context, state) {
+          if (state is TodosLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is TodosSuccess) {
+            return ListView.builder(
+              itemCount: context.watch<TodosCubit>().todos.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  leading: Text(
+                      context.watch<TodosCubit>().todos[index].id.toString()),
+                  title: Text(
+                      context.watch<TodosCubit>().todos[index].title ?? "--"),
+                  subtitle: Text(context
+                      .watch<TodosCubit>()
+                      .todos[index]
+                      .completed
+                      .toString()),
+                  trailing: const Icon(Icons.list),
+                  tileColor: const Color.fromARGB(255, 229, 243, 250),
+                  iconColor: Colors.blue,
+                );
+              },
+            );
+          } else {
+            return const Center(
+              child: Text("Error in this screen"),
+            );
+          }
+        },
+        listener: (context, state) {
+          if (state is TodosError) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text("Hello we have error"),
+            ));
+            print("Hello");
+          }
+        },
+      ),
+    );
   }
 }

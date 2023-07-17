@@ -22,7 +22,7 @@ class _SecondPageState extends State<SecondPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Page Two"),
+          title: const Text("Todos"),
           automaticallyImplyLeading: false,
           centerTitle: true,
           leading: IconButton(
