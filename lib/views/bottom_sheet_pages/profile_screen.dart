@@ -19,8 +19,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text(userEmail),
-    );
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Icon(
+          Icons.person, // Replace with the icon you want to use
+          size: 100.0,
+          color: Colors.blue,
+        ),
+        const SizedBox(height: 20.0),
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
+          decoration: BoxDecoration(
+            color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Text(
+            userEmail,
+            style: const TextStyle(
+              fontSize: 20.0,
+            ),
+          ),
+        ),
+      ],
+    ));
   }
 
   getUserEmail() async {
