@@ -70,7 +70,6 @@ class _WidgetOneState extends State<WidgetOne> {
                           if (_formKey.currentState!.validate()) {
                             signinUsingFirebase(
                                 emailController.text, passwordController.text);
-                            saveEmail(emailController.text);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
