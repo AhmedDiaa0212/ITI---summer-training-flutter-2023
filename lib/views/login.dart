@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:newapp/views/MyButton.dart';
 import 'package:newapp/views/page2.dart';
@@ -11,8 +12,10 @@ class WidgetOne extends StatefulWidget {
 }
 
 class _WidgetOneState extends State<WidgetOne> {
-  final TextEditingController emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController emailController =
+      TextEditingController(text: "Hi");
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +51,13 @@ class _WidgetOneState extends State<WidgetOne> {
                 Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      controller: passwordController,
                       decoration: const InputDecoration(
                           labelText: "Password",
                           prefixIcon: Icon(Icons.password)),
                       validator: (value) {
-                        if (value!.length < 8) {
-                          return "The password is at least seven letters, Try again";
+                        if (value!.length < 7) {
+                          return "The password is at least 8 letters, Try again";
                         } else {
                           return null;
                         }
@@ -64,6 +68,8 @@ class _WidgetOneState extends State<WidgetOne> {
                     child: InkWell(
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
+                            signinUsingFirebase(
+                                emailController.text, passwordController.text);
                             saveEmail(emailController.text);
                             Navigator.push(
                               context,
@@ -72,6 +78,8 @@ class _WidgetOneState extends State<WidgetOne> {
                                         email: emailController.text,
                                       )),
                             );
+                          } else {
+                            emailController.clear();
                           }
                         },
                         child: const MyButton(
@@ -90,5 +98,13 @@ class _WidgetOneState extends State<WidgetOne> {
   saveEmail(String email) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('email', email);
+  }
+
+  signinUsingFirebase(String email, String password) async {
+    UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
+    final user = userCredential.user;
+    print(user?.uid);
+    saveEmail(user!.email!);
   }
 }
