@@ -16,6 +16,7 @@ class _WidgetOneState extends State<WidgetOne> {
   final TextEditingController emailController =
       TextEditingController(text: "Hi");
   final TextEditingController passwordController = TextEditingController();
+  bool isPasswordHidden = true;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +31,8 @@ class _WidgetOneState extends State<WidgetOne> {
                       width: 120,
                       height: 120,
                       child: Image.asset("assets/flutterpic.jpg"),
+                      //The same picture from internet
+                      //Image.network('https://assets.website-files.com/60d251a34163cf29e1220806/626accd8eefaec54f23310ba_flutter%20developer%20logo.png'),
                     )),
                 Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -52,15 +55,24 @@ class _WidgetOneState extends State<WidgetOne> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       controller: passwordController,
-                      decoration: const InputDecoration(
+                      obscureText: isPasswordHidden,
+                      decoration: InputDecoration(
                           labelText: "Password",
-                          prefixIcon: Icon(Icons.password)),
+                          prefix: const Icon(Icons.password),
+                          suffixIcon: IconButton(
+                            icon: const Icon(
+                              Icons.visibility,
+                            ),
+                            onPressed: () {
+                              isPasswordHidden = !isPasswordHidden;
+                              setState(() {});
+                            },
+                          )),
                       validator: (value) {
-                        if (value!.length < 7) {
-                          return "The password is at least 8 letters, Try again";
-                        } else {
-                          return null;
+                        if (value!.length < 6) {
+                          return "The password is short, Try again";
                         }
+                        return null;
                       },
                     )),
                 Padding(
