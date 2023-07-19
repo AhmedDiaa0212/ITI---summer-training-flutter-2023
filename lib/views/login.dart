@@ -78,17 +78,24 @@ class _WidgetOneState extends State<WidgetOne> {
                 Padding(
                     padding: const EdgeInsets.all(25.0),
                     child: InkWell(
-                        onTap: () {
+                        onTap: () async {
                           if (_formKey.currentState!.validate()) {
-                            signinUsingFirebase(
+                            bool loginOuput = await signinByFirebase(
                                 emailController.text, passwordController.text);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SecondPage(
-                                        email: emailController.text,
-                                      )),
-                            );
+                            if (loginOuput == true) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SecondPage(
+                                          email: emailController.text,
+                                        )),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text("Login faild!, Try again"),
+                              ));
+                            }
                           } else {
                             emailController.clear();
                           }
@@ -106,16 +113,27 @@ class _WidgetOneState extends State<WidgetOne> {
             ])));
   }
 
+// Navigation using SharedPreferences packge
   saveEmail(String email) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('email', email);
   }
 
-  signinUsingFirebase(String email, String password) async {
-    UserCredential userCredential = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: password);
-    final user = userCredential.user;
-    print(user?.uid);
-    saveEmail(user!.email!);
+// Authenticate and manage users
+  Future<bool> signinByFirebase(String email, String password) async {
+    bool output = false;
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      final user = userCredential.user;
+      if (user != null) {
+        print(user?.uid);
+        saveEmail(user!.email!);
+        output = true;
+      }
+      return output;
+    } catch (e) {
+      return output;
+    }
   }
 }
