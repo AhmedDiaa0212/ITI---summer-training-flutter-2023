@@ -93,7 +93,7 @@ class _WidgetOneState extends State<WidgetOne> {
                             } else {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
-                                content: Text("Login faild!, Try again"),
+                                content: Text("Login faild, Try again"),
                               ));
                             }
                           } else {
