@@ -80,6 +80,9 @@ class _WidgetOneState extends State<WidgetOne> {
                     child: InkWell(
                         onTap: () async {
                           if (_formKey.currentState!.validate()) {
+                            final scaffoldContext =
+                                ScaffoldMessenger.of(context);
+
                             bool loginOuput = await signinByFirebase(
                                 emailController.text, passwordController.text);
                             if (loginOuput == true) {
@@ -91,8 +94,7 @@ class _WidgetOneState extends State<WidgetOne> {
                                         )),
                               );
                             } else {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
+                              scaffoldContext.showSnackBar(const SnackBar(
                                 content: Text("Login faild, Try again"),
                               ));
                             }
