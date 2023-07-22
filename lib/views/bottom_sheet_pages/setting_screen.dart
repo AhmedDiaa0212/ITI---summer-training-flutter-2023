@@ -14,9 +14,9 @@ class _SettingScreenState extends State<SettingScreen> {
       child: Text(
         'Settings',
         style: TextStyle(
-          fontSize: 50.0,
-          fontWeight: FontWeight.bold,
-        ),
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+            fontSize: 20.0),
       ),
     );
   }
