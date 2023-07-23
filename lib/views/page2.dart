@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'bottom_sheet_pages/TodosDoc.dart';
 import 'bottom_sheet_pages/main_screen.dart';
 import 'bottom_sheet_pages/profile_screen.dart';
 import 'bottom_sheet_pages/setting_screen.dart';
@@ -12,9 +13,10 @@ class SecondPage extends StatefulWidget {
 }
 
 class _SecondPageState extends State<SecondPage> {
-  int seletedIndex = 0;
+  int seletedIndex = 0; // Track the selected index
   List<Widget> pages = [
     const MainScreen(),
+    const TodosDoc(),
     const SettingScreen(),
     const ProfileScreen(),
   ];
@@ -45,8 +47,13 @@ class _SecondPageState extends State<SecondPage> {
           ),
         ),*/
         bottomNavigationBar: BottomNavigationBar(
+            selectedItemColor: Colors.blue,
+            unselectedItemColor: Colors.grey,
+            showSelectedLabels: true,
+            showUnselectedLabels: true,
             items: const [
               BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+              BottomNavigationBarItem(icon: Icon(Icons.task), label: "Tasks"),
               BottomNavigationBarItem(
                   icon: Icon(Icons.settings), label: "settings"),
               BottomNavigationBarItem(

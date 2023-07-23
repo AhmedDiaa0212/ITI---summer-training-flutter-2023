@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:newapp/views/MyButton.dart';
-//import 'package:newapp/views/page2.dart';
+import 'package:newapp/views/page2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../project_collection.dart';
 
 class WidgetOne extends StatefulWidget {
   const WidgetOne({super.key});
@@ -87,18 +85,13 @@ class _WidgetOneState extends State<WidgetOne> {
                             bool loginOuput = await signinByFirebase(
                                 emailController.text, passwordController.text);
                             if (loginOuput == true) {
-                              /*Navigator.push(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => SecondPage(
                                           email: emailController.text,
                                         )),
-                              );*/
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ProjectCollection()));
+                              );
                             } else {
                               scaffoldContext.showSnackBar(const SnackBar(
                                 content: Text("Login faild, Try again"),
